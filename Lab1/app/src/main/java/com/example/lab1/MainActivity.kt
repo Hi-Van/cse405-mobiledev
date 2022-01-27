@@ -1,6 +1,7 @@
 package com.example.lab1
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -16,6 +17,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    override fun onStart() {
+        super.onStart()
+
+        Log.i("PGBinfo", "Stopped to Pause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.i("PGBinfo", "Paused to Resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.i("PGBinfo", "From Resume to Pause")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,10 +47,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        Log.i("PGBinfo", "From Non-existent to Stopped")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
