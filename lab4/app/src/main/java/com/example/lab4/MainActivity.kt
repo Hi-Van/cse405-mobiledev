@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             val stringRequest = StringRequest(Request.Method.GET, url,
                 { response ->
                     // Display the response string.
-                    Log.i("TestingRequesting", "Response is: $response")
+                    Log.i("testingRequesting", "Response is: $response")
 
                     val idx = response.indexOf("primaryImageSmall")
 
