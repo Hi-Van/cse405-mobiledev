@@ -27,12 +27,10 @@ class RadioAdapter(var radioStations: RadioStations) : RecyclerView.Adapter<Radi
         }
 
         var name : TextView = itemView.findViewById(R.id.name_text)
-        var uri : TextView = itemView.findViewById(R.id.uri_text)
         var whichCard: Int = 0
 
         fun bind(position: Int) {
             name.text = allStations[position].name
-            uri.text = allStations[position].uri
 
             whichCard = position
         }

@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stationName: TextView
     private  lateinit var mediaPlayer: MediaPlayer
     private lateinit var recyclerView: RecyclerView
+    private lateinit var nextButton: Button
+    private lateinit var backButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +31,24 @@ class MainActivity : AppCompatActivity() {
         var radioStations = RadioStations()
 
         radioButton = findViewById(R.id.on_off_button)
+        nextButton = findViewById(R.id.next)
+        backButton = findViewById(R.id.back)
+        stationName = findViewById(R.id.stationname)
 
         var stations: MutableList<RadioStation> = radioStations.getStations()
+        var idx: Int = 0
 
-        var url = stations[1].uri.toString()
+        var url = stations[idx].uri.toString()
         setUpRadio(url)
 
         radioButton.setOnClickListener{
 
             if (radioOn) {
                 mediaPlayer.pause()
-                radioButton.setText("Radio On")
+                radioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.play,0,0,0)
             } else {
                 mediaPlayer.start()
-                radioButton.setText("Radio Off")
+                radioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pause,0,0,0)
             }
 
             radioOn = ! radioOn
@@ -53,9 +59,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
 
     }
-
-
-
 
     private fun setUpRadio(url: String) {
         mediaPlayer = MediaPlayer().apply {
