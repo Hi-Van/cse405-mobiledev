@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">lab2</string>
+    <string name="qone">Python is lazy evaluated</string>
+    <string name="qtwo">JVM stands for Java Version Manager</string>
+    <string name="qthree">Typical npm terminal commands start with the "npm" prefix</string>
+    <string name="qfour">Kotlin ternaries share similar syntax to Java ternaries</string>
+    <string name="qfive">The runtime for a set in C is dependent on a B-tree structure</string>
+    <string name="qsix">There is both an ordered and unordered set in C</string>
+    <string name="qseven">Kotlin foo? syntax checks for object existence</string>
+    <string name="qeight">Javascript can be written within a Kotlin file</string>
+    <string name="qnine">Python and Javscript are interpreted languages</string>
+    <string name="qten">C and C++ are interpreted languages</string>
+</resources>
