@@ -1,8 +1,7 @@
-package com.example.k2022_03_08_rv.model
+package com.example.k2022_04_04c.model
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import androidx.lifecycle.ViewModel
 
 
 class MyMediaPlayer {

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.K2022_04_04c">
 
-        <service android:name=".Services.MediaServices" android:enabled="true" />
+        <service android:name=".services.MediaServices" android:enabled="true" />
 
         <activity
             android:name=".MainActivity"

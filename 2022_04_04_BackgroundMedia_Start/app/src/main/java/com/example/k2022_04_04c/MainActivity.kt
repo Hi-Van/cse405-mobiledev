@@ -9,8 +9,8 @@ import android.os.IBinder
 import android.os.Message
 import android.widget.Button
 import android.widget.Toast
-import com.example.k2022_03_08_rv.model.RadioStations
-import com.example.k2022_04_04c.Services.MediaServices
+import com.example.k2022_04_04c.model.RadioStations
+import com.example.k2022_04_04c.services.MediaServices
 
 lateinit var mediaServices: MediaServices
 private var bound: Boolean = false
@@ -18,7 +18,7 @@ private var message: Message = Message()
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var radioToggle: Button
+    private lateinit var radioToggle: Button
     val radioStations: RadioStations = RadioStations()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         radioToggle = findViewById(R.id.radio_toggle_button)
         radioToggle.setOnClickListener{
-            var value = mediaServices.getInt()
+            val value = mediaServices.getInt()
             message.what = 1
             mediaServices.radioToggle()
-            mediaServices.SelectMedia(1)
+            mediaServices.selectMedia(1)
             mediaServices.sendMessagge(message,1)
             Toast.makeText(applicationContext,"Hello: $value", Toast.LENGTH_SHORT).show()
         }
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val intent: Intent = Intent(this, MediaServices::class.java)
+        val intent = Intent(this, MediaServices::class.java)
         intent.putExtra("Greeting","Hello world!")
         bindService(intent, connection, BIND_AUTO_CREATE)
     }
