@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerView = findViewById(R.id.recycleview)
-        recyclerView.adapter = RadioAdapter( rc.sources() )
+        recyclerView.adapter = RadioAdapter( rc )
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
     }
 }

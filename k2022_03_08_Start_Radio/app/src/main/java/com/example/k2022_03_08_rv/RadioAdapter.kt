@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.k2022_03_08_rv.controller.RadioController
 import com.example.k2022_03_08_rv.model.RadioStation
 import com.example.k2022_03_08_rv.model.RadioStations
 import java.util.zip.Inflater
 
 
-lateinit var allStations : MutableList<RadioStation>
+lateinit var rc : RadioController
 
-class RadioAdapter(var radioStations: RadioStations) : RecyclerView.Adapter<RadioAdapter.RadioViewHolder> () {
+class RadioAdapter(var controller: RadioController) : RecyclerView.Adapter<RadioAdapter.RadioViewHolder> () {
 
     init {
-        allStations = radioStations.getStations()
+        rc = controller
     }
 
     class RadioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -27,22 +28,31 @@ class RadioAdapter(var radioStations: RadioStations) : RecyclerView.Adapter<Radi
         }
 
         var name : TextView = itemView.findViewById(R.id.name_text)
-        var uri : TextView = itemView.findViewById(R.id.uri_text)
 
         fun bind(position: Int) {
-            name.text = allStations[position].name
-            uri.text = allStations[position].uri
-
+            val source = rc.sources().getStations()[position]
+            name.text = source.name
         }
 
         override fun onClick(p0: View?) {
+            val source = rc.sources().getStations()[adapterPosition + 1]
+
+            rc.pause()
+            rc.stop()
+            rc.set(adapterPosition + 1)
+            rc.setUp()
+
+            if ( rc.isPlaying() ) {
+                rc.play()
+            }
+
             Toast.makeText(p0?.context, "Hello: $adapterPosition", Toast.LENGTH_LONG).show()
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.radio_card, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.radio_card, parent, false)
 
          return RadioViewHolder(view)
     }
@@ -52,7 +62,7 @@ class RadioAdapter(var radioStations: RadioStations) : RecyclerView.Adapter<Radi
     }
 
     override fun getItemCount(): Int {
-        return allStations.size
+        return rc.sources().getStations().size
     }
 
 }

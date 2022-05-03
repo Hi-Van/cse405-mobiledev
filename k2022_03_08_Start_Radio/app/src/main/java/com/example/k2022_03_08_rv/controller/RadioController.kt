@@ -3,7 +3,6 @@ package com.example.k2022_03_08_rv.controller
 import android.media.AudioAttributes
 import com.example.k2022_03_08_rv.model.RadioStations
 import android.media.MediaPlayer
-import com.example.k2022_03_08_rv.model.RadioStation
 
 class RadioController {
     private var mp: MediaPlayer = MediaPlayer()
@@ -25,7 +24,7 @@ class RadioController {
 
         mp.reset()
         mp.setDataSource(url)
-        mp.prepare()
+        mp.prepareAsync()
     }
 
     fun sources(): RadioStations {
@@ -40,11 +39,37 @@ class RadioController {
         mp.pause()
     }
 
+    fun stop() {
+        mp.stop()
+    }
+
     fun toggle() {
         playing != playing
     }
 
     fun isPlaying(): Boolean {
         return playing
+    }
+
+    fun next() {
+        idx = (idx + 1) % (stations.size() + 1)
+
+        if (idx == 0) {
+            idx += 1
+        }
+
+    }
+
+    fun prev() {
+        idx -= 1
+
+        if (idx == 0) {
+            idx = stations.size()
+        }
+
+    }
+
+    fun set(i: Int) {
+        idx = i
     }
 }
