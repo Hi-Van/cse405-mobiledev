@@ -7,12 +7,12 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.k2022_04_22_lab7.models.questions.AnswerObject
 import com.example.k2022_04_22_lab7.models.questions.Question
+import com.example.k2022_04_22_lab7.models.score.ScoreViewModel
 import com.google.gson.Gson
 
 
@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     private var idx: Int = 0;
 
     val urlJSON = "http://192.168.56.1:8080/questions";
-    var urlIMAGE = "http://192.168.56.1:8080/static/";
-    val test: List<String> = listOf("1", "2", "3")
+    var urlIMAGE = "http://192.168.56.1:8080/static/stamford_harbor.jpg";
+    val score = ScoreViewModel()
+    var test = mutableListOf<AnswerObject>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +40,9 @@ class MainActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageView)
         answersView = findViewById(R.id.listview)
 
-        fun reqQuestions() {
+
+        fun getQuestions() {
             val queue = Volley.newRequestQueue(this)
-
-
             val jsonArrayRequest = JsonArrayRequest(Request.Method.GET,
                 urlJSON,
                 null,
@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
                     // Display the first 500 characters of the response string
 
                     questionList = gson.fromJson(response.toString(), Array<Question>::class.java ).toList()
+
+                    test.addAll(questionList!![0].getAnswers().getAnswerList())
                 },
                 { error ->  basicQuestionView.text = "Error: ${error}" })
 
@@ -72,9 +74,11 @@ class MainActivity : AppCompatActivity() {
             queue.add(imageRequest)
         }
 
-        answersView.adapter = ItemAdapter(test)
+        getQuestions()
+
+        answersView.adapter = ItemAdapter(test, score)
         answersView.layoutManager = LinearLayoutManager(baseContext)
 
-        }
     }
+}
 

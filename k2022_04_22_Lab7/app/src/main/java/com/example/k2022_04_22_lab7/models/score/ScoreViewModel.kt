@@ -8,20 +8,24 @@ class ScoreViewModel : ViewModel() {
 
     private var _score: MutableLiveData<Int> = MutableLiveData(0)
 
-    fun getScore() : LiveData<Int> {
-        return _score
-    }
-
     fun incremenet() {
         _score.value = _score.value?.plus(1)
     }
 
     fun decrement() {
-        _score.value = _score.value?.minus(1)
+
+        if (_score.value!! >= 1) {
+            _score.value = _score.value?.minus(1)
+        }
+
     }
 
     fun zero() {
         _score.value = 0
+    }
+
+    fun getScore(): Int {
+        return _score.value!!
     }
 
 }

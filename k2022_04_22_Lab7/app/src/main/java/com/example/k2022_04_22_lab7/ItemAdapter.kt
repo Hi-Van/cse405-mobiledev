@@ -7,13 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.k2022_04_22_lab7.models.questions.AnswerObject
+import com.example.k2022_04_22_lab7.models.score.ScoreViewModel
 import java.util.zip.Inflater
 
-lateinit var answers: List<String>
-class ItemAdapter(var a: List<String>) : RecyclerView.Adapter<ItemAdapter.RadioViewHolder> () {
+lateinit var answers: MutableList<AnswerObject>
+lateinit var score: ScoreViewModel
+
+class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : RecyclerView.Adapter<ItemAdapter.RadioViewHolder> () {
 
     init {
         answers = a
+        score = s
     }
 
     class RadioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -26,13 +31,20 @@ class ItemAdapter(var a: List<String>) : RecyclerView.Adapter<ItemAdapter.RadioV
         var whichCard: Int = 0
 
         fun bind(position: Int) {
-            name.text = answers[position]
-
-            whichCard = position
+            name.text = answers[position].getAnswer()
         }
 
         override fun onClick(p0: View?) {
-            Toast.makeText(p0?.context, "Hello: " + whichCard.toString(), Toast.LENGTH_LONG).show()
+
+            if ( answers[whichCard].getIsTrue() == "true" ) {
+                score.incremenet()
+            }
+
+            else {
+                score.decrement()
+            }
+
+            Toast.makeText(p0?.context, "score: ${score.getScore()}", Toast.LENGTH_LONG).show()
         }
 
     }
