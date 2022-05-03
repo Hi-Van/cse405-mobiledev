@@ -7,6 +7,11 @@ class AnswerList(lst: List<AnswerObject>) {
         return answerList.size
     }
 
+    fun getAnswerList(): MutableList<AnswerObject> {
+        return answerList
+    }
+
+
     fun setAnswerList(aList: List<AnswerObject>) {
         answerList = aList.toMutableList()
     }

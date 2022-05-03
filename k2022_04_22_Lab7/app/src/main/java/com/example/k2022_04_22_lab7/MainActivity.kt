@@ -3,9 +3,9 @@ package com.example.k2022_04_22_lab7
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
@@ -18,30 +18,28 @@ import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var getDataButton: Button
-    private lateinit var getImageButton: Button
     private lateinit var basicQuestionView: TextView
     private lateinit var imageView: ImageView
+    private lateinit var answersView: RecyclerView
 
     private var gson = Gson()
+    private var questionList: List<Question>? = null;
+    private var idx: Int = 0;
 
     val urlJSON = "http://192.168.56.1:8080/questions";
-    val urlIMAGE = "http://192.168.56.1:8080/static/stamford_harbor.jpg";
+    var urlIMAGE = "http://192.168.56.1:8080/static/";
+    val test: List<String> = listOf("1", "2", "3")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        getDataButton = findViewById(R.id.get_data_button)
-        getImageButton = findViewById(R.id.image_button)
+
         basicQuestionView = findViewById(R.id.basic_question_view)
         imageView = findViewById(R.id.imageView)
+        answersView = findViewById(R.id.listview)
 
-        getDataButton.setOnClickListener {
-
-// ...
-
-// Instantiate the RequestQueue.
+        fun reqQuestions() {
             val queue = Volley.newRequestQueue(this)
 
 
@@ -49,18 +47,16 @@ class MainActivity : AppCompatActivity() {
                 urlJSON,
                 null,
                 { response ->
-                    // Display the first 500 characters of the response string.
-                    basicQuestionView.setText("Response is: ${response}")
+                    // Display the first 500 characters of the response string
 
-                    var questionList: List<Question> = gson.fromJson(response.toString(), Array<Question>::class.java ).toList()
+                    questionList = gson.fromJson(response.toString(), Array<Question>::class.java ).toList()
                 },
                 { error ->  basicQuestionView.text = "Error: ${error}" })
 
             queue.add(jsonArrayRequest)
         }
 
-        getImageButton.setOnClickListener {
-
+        fun setImage() {
             val queue = Volley.newRequestQueue(this)
             val imageRequest = ImageRequest(
                 urlIMAGE,
@@ -76,7 +72,9 @@ class MainActivity : AppCompatActivity() {
             queue.add(imageRequest)
         }
 
-        }
+        answersView.adapter = ItemAdapter(test)
+        answersView.layoutManager = LinearLayoutManager(baseContext)
 
+        }
     }
 

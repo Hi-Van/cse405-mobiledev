@@ -3,7 +3,6 @@ package com.example.k2022_04_22_lab7.controllers
 import java.util.*
 import com.example.k2022_04_22_lab7.models.questions.AllQuestions
 
-
 class NextQuestion {
 
     private val allQestions: AllQuestions = AllQuestions()
