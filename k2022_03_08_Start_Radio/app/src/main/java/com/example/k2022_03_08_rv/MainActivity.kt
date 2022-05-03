@@ -17,30 +17,21 @@ import com.example.k2022_03_08_rv.model.RadioStations
 
 class MainActivity : AppCompatActivity() {
 
-    private var radioOn: Boolean = false
     private lateinit var radioButton : Button
-    private lateinit var stationName: TextView
-    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var recyclerView: RecyclerView
     private lateinit var rc: RadioController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var radioStations = RadioStations()
         rc = RadioController()
 
         radioButton = findViewById(R.id.on_off_button)
-
-        var stations: MutableList<RadioStation> = radioStations.getStations()
-
-        var url = stations[1].uri.toString()
-        rc.setUp(url)
+        rc.setUp()
 
         radioButton.setOnClickListener{
 
-            if (radioOn) {
+            if (rc.isPlaying()) {
                 rc.pause()
                 radioButton.setText("Radio On")
             } else {
@@ -48,11 +39,11 @@ class MainActivity : AppCompatActivity() {
                 radioButton.setText("Radio Off")
             }
 
-            radioOn = ! radioOn
+            rc.toggle()
         }
 
         recyclerView = findViewById(R.id.recycleview)
-        recyclerView.adapter = RadioAdapter(radioStations)
+        recyclerView.adapter = RadioAdapter( rc.sources() )
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
     }
 }
