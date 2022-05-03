@@ -28,17 +28,15 @@ class RadioAdapter(var radioStations: RadioStations) : RecyclerView.Adapter<Radi
 
         var name : TextView = itemView.findViewById(R.id.name_text)
         var uri : TextView = itemView.findViewById(R.id.uri_text)
-        var whichCard: Int = 0
 
         fun bind(position: Int) {
             name.text = allStations[position].name
             uri.text = allStations[position].uri
 
-            whichCard = position
         }
 
         override fun onClick(p0: View?) {
-            Toast.makeText(p0?.context, "Hello: " + whichCard.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(p0?.context, "Hello: $adapterPosition", Toast.LENGTH_LONG).show()
         }
 
     }
