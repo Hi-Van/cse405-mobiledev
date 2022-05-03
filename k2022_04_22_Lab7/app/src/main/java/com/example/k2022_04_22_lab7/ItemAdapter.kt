@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.k2022_04_22_lab7.controllers.QTroller
 import com.example.k2022_04_22_lab7.models.questions.AnswerObject
 import com.example.k2022_04_22_lab7.models.score.ScoreViewModel
 import java.util.zip.Inflater
 
 lateinit var answers: MutableList<AnswerObject>
 lateinit var score: ScoreViewModel
+lateinit var qtroller: QTroller
 
 class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : RecyclerView.Adapter<ItemAdapter.RadioViewHolder> () {
 
@@ -27,8 +28,7 @@ class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : Rec
             itemView.setOnClickListener(this)
         }
 
-        var name : TextView = itemView.findViewById(R.id.answertext)
-        var whichCard: Int = 0
+        private var name : TextView = itemView.findViewById(R.id.answertext)
 
         fun bind(position: Int) {
             name.text = answers[position].getAnswer()
@@ -36,7 +36,7 @@ class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : Rec
 
         override fun onClick(p0: View?) {
 
-            if ( answers[whichCard].getIsTrue() == "true" ) {
+            if ( answers[adapterPosition].getIsTrue() == "true" ) {
                 score.incremenet()
             }
 
@@ -44,7 +44,7 @@ class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : Rec
                 score.decrement()
             }
 
-            Toast.makeText(p0?.context, "score: ${score.getScore()}", Toast.LENGTH_LONG).show()
+
         }
 
     }
