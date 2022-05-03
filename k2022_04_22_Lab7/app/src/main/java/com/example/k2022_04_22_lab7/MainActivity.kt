@@ -1,5 +1,6 @@
 package com.example.k2022_04_22_lab7
 
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,11 +28,11 @@ class MainActivity : AppCompatActivity() {
 
     private var gson = Gson()
 
-    val urlJSON = "http://192.168.56.1:8080/questions";
-    var urlIMAGE = "http://192.168.56.1:8080/static/";
+    private val urlJSON = "http://192.168.56.1:8080/questions";
+    private var urlIMAGE = "http://192.168.56.1:8080/static/";
 
-    val score = ScoreViewModel()
-    var qtroller = QTroller()
+    private val score = ScoreViewModel()
+    private var qtroller = QTroller()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,8 +88,18 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     randomButton.setOnClickListener {
-                        qtroller.linearNextQuestion()
+                        qtroller.pseudoRandomNextQuestion()
                         renderQuestionData()
+                    }
+
+                    scoreButton.setOnClickListener {
+                        Intent(baseContext, ScoreActivity::class.java).also { scoreActivity ->
+                            scoreActivity.putExtra("FROM_MAIN", score.getScore().toString())
+                            startActivity(scoreActivity)
+
+                        }
+
+                        score.zero()
                     }
                 },
                 { error ->  basicQuestionView.text = "Error: ${error}" })

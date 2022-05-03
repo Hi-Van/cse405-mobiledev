@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.k2022_04_22_lab7.controllers.QTroller
 import com.example.k2022_04_22_lab7.models.questions.AnswerObject
@@ -44,7 +45,7 @@ class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : Rec
                 score.decrement()
             }
 
-
+            Toast.makeText(p0?.context, "Question Answered!", Toast.LENGTH_SHORT).show()
         }
 
     }
