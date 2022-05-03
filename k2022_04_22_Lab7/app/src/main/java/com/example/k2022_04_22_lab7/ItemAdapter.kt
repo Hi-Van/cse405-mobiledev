@@ -14,7 +14,6 @@ import java.util.zip.Inflater
 
 lateinit var answers: MutableList<AnswerObject>
 lateinit var score: ScoreViewModel
-lateinit var qtroller: QTroller
 
 class ItemAdapter(var a: MutableList<AnswerObject>, var s: ScoreViewModel) : RecyclerView.Adapter<ItemAdapter.RadioViewHolder> () {
 
